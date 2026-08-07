@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "endstone-portals"
+version = "1.1.7"
+description = "Entity and block portal system with particle effects, local teleportation, and cross-server transfers"
+requires-python = ">=3.10"
+dependencies = [
+    "endstone>=0.11.8,<0.12"
+]
+
+[project.entry-points."endstone"]
+portals = "endstone_portals:PortalsPlugin"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["endstone_portals"]
+
+[tool.setuptools.package-data]
+"endstone_portals" = ["*.yml", "*.json", "*.toml"]
