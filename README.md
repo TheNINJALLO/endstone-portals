@@ -20,8 +20,9 @@
 </p>
 
 <p align="center">
-  <a href="#overview">Overview</a> &bull;
-  <a href="#compatibility">Compatibility</a> &bull;
+  <a href="#what-it-does">What it does</a> &bull;
+  <a href="#how-to-use">How to use</a> &bull;
+  <a href="#commands-and-permissions">Commands</a> &bull;
   <a href="#install">Install</a> &bull;
   <a href="https://github.com/TheNINJALLO/endstone-portals/releases">Releases</a>
 </p>
@@ -30,11 +31,24 @@
 
 Entity and block portal system with particle effects, local teleportation, and cross-server transfers. This release is aligned with Endstone 0.11.8 and Minecraft Bedrock Dedicated Server 1.26.40, and is distributed as a Python wheel for direct installation in an Endstone server.
 
-## Capabilities
+## What it does
 
-- Entity and block activated portals
-- Local teleports and cross-server transfers
-- Configurable effects and destination handling
+- Creates entity-activated and block-frame portals through in-game forms.
+- Supports local dimension teleports and cross-server transfers with loop protection.
+- Adds particle effects, persistent definitions, and frame-block protection for non-operators.
+
+## How to use
+
+1. Run `/portal` as an operator and choose whether to create an entity or block portal.
+2. Set the activation target/frame and choose either local coordinates or a remote server destination.
+3. Test the portal in both directions, then use `/portal list` to verify the stored definition.
+4. Use `/portal reload` after manual data edits or `/portal delete <name>` to remove a portal cleanly.
+
+## Commands and permissions
+
+| Command / usage | What it does | Access |
+|---|---|---|
+| `/portal`<br>`/portal reload`<br>`/portal list`<br>`/portal delete <name: str>` | Portal management commands | `portals.admin` |
 
 ## Compatibility
 
