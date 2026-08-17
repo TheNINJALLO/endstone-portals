@@ -20,7 +20,7 @@ class PortalsPlugin(Plugin):
 
     # Plugin metadata — name MUST be lowercase with underscores, MUST NOT start with "endstone"
     name = "portals"
-    version = "1.1.6"
+    version = "1.1.8"
     api_version = "0.11"
 
     commands = {
