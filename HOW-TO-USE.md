@@ -154,8 +154,11 @@ You can pick **multiple** particles for a block portal — the plugin randomly c
 
 ### Server Transfer Protection
 When a portal transfers a player to another server:
-- The player is moved **3 blocks away** from the portal center before transfer (prevents re-triggering if they reconnect).
-- If the player rejoins within 10 seconds, they get an extra **5-second cooldown** (loop protection).
+- The player is moved onto loaded, solid ground outside the full portal frame and every nearby portal before transfer.
+- Transfer waits **3 seconds** after that move and checks the player's actual position again. If the move fails, no safe exit exists, or the player re-enters a portal, transfer is cancelled.
+- Joining players receive a **20-second cooldown**, with repeated checks to move them outside portals while their login position settles.
+- Players arriving inside a portal or remaining inside after use must leave the portal area before it can activate again. Cooldown expiry cannot send them back automatically.
+- Disconnecting cancels pending transfers so reconnecting cannot inherit an old transfer.
 
 ---
 

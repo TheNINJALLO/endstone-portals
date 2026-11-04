@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "endstone-portals"
-version = "1.1.8"
+version = "1.1.9"
 description = "Entity and block portal system with particle effects, local teleportation, and cross-server transfers"
 requires-python = ">=3.10"
 dependencies = [

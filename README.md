@@ -58,14 +58,14 @@ Entity and block portal system with particle effects, local teleportation, and c
 | Endstone API | `0.11` |
 | Bedrock Dedicated Server | `1.26.52.3` |
 | Python | `>=3.11` |
-| Plugin release | `v1.1.8` |
+| Plugin release | `v1.1.9` |
 
 ## Install
 
 Download the wheel from the matching GitHub release:
 
 ```bash
-gh release download v1.1.8 --repo TheNINJALLO/endstone-portals --pattern "*.whl"
+gh release download v1.1.9 --repo TheNINJALLO/endstone-portals --pattern "*.whl"
 ```
 
 Copy the downloaded wheel into the server's `plugins/` directory, remove any older wheel for the same plugin, and restart Endstone.
@@ -79,5 +79,5 @@ Runtime databases, logs, local `.env` files, server directories, and root `confi
 
 ## Release automation
 
-Every `v*` tag runs [the wheel release workflow](.github/workflows/wheel-release.yml), builds the package in a clean GitHub runner, stores the wheel as a workflow artifact, and attaches it to the matching GitHub release.
+Every `v*` tag runs [the wheel release workflow](.github/workflows/wheel-release.yml), checks portal loop protection, builds the package in a clean GitHub runner, stores the wheel as a workflow artifact, and attaches it to the matching GitHub release. Pushing a new package version to `main` also creates its tag and release after these checks pass; existing releases are left unchanged on branch builds.
 <!-- endstone-professional-header:end -->

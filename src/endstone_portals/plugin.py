@@ -5,6 +5,8 @@ from endstone.event import (
     event_handler,
     PlayerInteractActorEvent,
     PlayerJoinEvent,
+    PlayerQuitEvent,
+    PlayerTeleportEvent,
     ActorKnockbackEvent,
     BlockBreakEvent,
 )
@@ -20,7 +22,7 @@ class PortalsPlugin(Plugin):
 
     # Plugin metadata — name MUST be lowercase with underscores, MUST NOT start with "endstone"
     name = "portals"
-    version = "1.1.8"
+    version = "1.1.9"
     api_version = "0.11"
 
     commands = {
@@ -188,6 +190,16 @@ class PortalsPlugin(Plugin):
                 self.block_handler.on_player_join(ev.player)
         except Exception as e:
             self.logger.error(f"Player join event error: {e}")
+
+    @event_handler
+    def on_player_quit(self, ev: PlayerQuitEvent):
+        if self.block_handler:
+            self.block_handler.on_player_quit(ev.player)
+
+    @event_handler
+    def on_player_teleport(self, ev: PlayerTeleportEvent):
+        if self.block_handler:
+            self.block_handler.on_player_teleport(ev.player, ev.to_location)
 
     @event_handler
     def on_actor_knockback(self, ev: ActorKnockbackEvent):
