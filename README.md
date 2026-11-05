@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-  <img alt="Endstone 0.11.14" src="https://img.shields.io/badge/Endstone-0.11.14-52b7a8?style=flat-square">
+  <img alt="Endstone 0.11.15" src="https://img.shields.io/badge/Endstone-0.11.15-52b7a8?style=flat-square">
   <img alt="API 0.11" src="https://img.shields.io/badge/API-0.11-63b8ff?style=flat-square">
-  <img alt="BDS 1.26.52.3" src="https://img.shields.io/badge/BDS-1.26.52.3-8b7dff?style=flat-square">
-  <img alt="Python >=3.11" src="https://img.shields.io/badge/Python-%3E=3.11-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white">
+  <img alt="BDS 1.26.60.6" src="https://img.shields.io/badge/BDS-1.26.60.6-8b7dff?style=flat-square">
+  <img alt="Python >=3.10" src="https://img.shields.io/badge/Python-%3E=3.10-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white">
 </p>
 
 <p align="center">
@@ -29,55 +29,74 @@
 
 ## Overview
 
-Entity and block portal system with particle effects, local teleportation, and cross-server transfers. This release is aligned with Endstone 0.11.14 and Minecraft Bedrock Dedicated Server 1.26.52.3, and is distributed as a Python wheel for direct installation in an Endstone server.
+Portals **1.1.10** creates entity and block-frame portals for local teleports or cross-server travel, with particles, optional inner fill blocks and in-game editing.
+
+For block-portal server transfers, the player must be moved to verified safe ground outside the full frame and nearby portals **before** transfer. The transfer waits 60 ticks (about three seconds), rechecks the player's position and cancels if they have re-entered a portal. Arrivals must exit their portal area before another activation; a cooldown alone cannot bounce them back.
 
 ## What it does
 
-- Creates entity-activated and block-frame portals through in-game forms.
-- Supports local dimension teleports and cross-server transfers with loop protection.
-- Adds particle effects, persistent definitions, and frame-block protection for non-operators.
+- Create entity portals activated by interact, hit or both, optionally with confirmation.
+- Detect vertical and horizontal rectangular block frames and add particles or inner fill.
+- Teleport to coordinates/dimensions or transfer to a server address and port.
+- Move players out of block portals during login and invalidate pending transfers on disconnect.
+- Save definitions in `portals.json` and protect frame blocks from non-operators.
 
 ## How to use
 
-1. Run `/portal` as an operator and choose whether to create an entity or block portal.
-2. Set the activation target/frame and choose either local coordinates or a remote server destination.
-3. Test the portal in both directions, then use `/portal list` to verify the stored definition.
-4. Use `/portal reload` after manual data edits or `/portal delete <name>` to remove a portal cleanly.
+1. Install the wheel, start the server, and join as an operator.
+2. Run `/portal` and select **Create Entity Portal** or **Create Block Portal**.
+3. For a block portal, build the complete rectangular border first, leave its opening empty, and stand close enough for the frame to fit within the eight-block scan range.
+4. Select the border, particles/optional fill and destination. Keep loaded, solid, non-hazardous ground outside the entire frame for transfer exits.
+5. Use **Manage Portals** to inspect, edit or delete definitions. Test with an ordinary player, including a return trip and a login at the destination.
+
+The [full how-to](HOW-TO-USE.md) covers every form field, inner fill, editing, loop protection, troubleshooting and upgrade checks. Use **None (Particles Only)** for the first test of a walk-through portal; solid inner fill can obstruct entry.
 
 ## Commands and permissions
 
-| Command / usage | What it does | Access |
-|---|---|---|
-| `/portal`<br>`/portal reload`<br>`/portal list`<br>`/portal delete <name: str>` | Portal management commands | `portals.admin` |
+Management is for in-game operators. The command permission is `portals.admin`, granted to operators by default. Console commands are not supported. Ordinary players can use configured portals.
+
+| Command | Purpose |
+|---|---|
+| `/portal` | Open the Portal Manager |
+| `/portal list` | List definitions and destinations |
+| `/portal reload` | Reload saved definitions from disk |
+| `/portal delete <name>` | Delete a definition by name |
+
+Prefer the management GUI for filled portals: its delete action also clears matching inner-fill blocks. The chat delete command removes the saved definition; inspect any remaining fill blocks yourself. Removing a portal definition leaves its physical border in place.
 
 ## Compatibility
 
-| Component | Supported version |
+| Component | Requirement or target |
 |---|---|
-| Endstone | `0.11.14` |
+| Plugin | `1.1.10` |
 | Endstone API | `0.11` |
-| Bedrock Dedicated Server | `1.26.52.3` |
-| Python | `>=3.11` |
-| Plugin release | `v1.1.10` |
+| Package dependency | `endstone>=0.11.9,<0.12` |
+| Python package minimum | `>=3.10` |
+| Intended 26.60 server setup | Endstone `0.11.15`, BDS `1.26.60.6`, Python `3.11+` |
+
+The **18 portal safety regression tests passed in Linux CI**. These use a simulated server/scheduler; live Endstone/BDS transfers still need the [in-game checks](HOW-TO-USE.md#upgrade-and-in-game-checks). The intended 26.60 setup is not a claim that every accepted dependency version or live server build has been qualified.
 
 ## Install
 
-Download the wheel from the matching GitHub release:
+Download [Portals v1.1.10](https://github.com/TheNINJALLO/endstone-portals/releases/tag/v1.1.10):
 
 ```bash
-gh release download v1.1.10 --repo TheNINJALLO/endstone-portals --pattern "*.whl"
+gh release download v1.1.10 --repo TheNINJALLO/endstone-portals --pattern '*.whl'
 ```
 
-Copy the downloaded wheel into the server's `plugins/` directory, remove any older wheel for the same plugin, and restart Endstone.
+Stop the server, back up the world and the Portals data folder, replace the previous Portals wheel in `plugins/`, and restart. Do not keep multiple versions installed. Keep the existing `portals.json`; no definition reset is required. Version 1.1.10 retains the loop fix from 1.1.9 without further gameplay changes.
 
-> [!IMPORTANT]
-> Use Endstone `0.11.14` with BDS `1.26.52.3`. Back up worlds and plugin data before upgrading a production server.
+On linked servers, install the updated plugin wherever block portals can receive arriving players and keep destination spawn positions outside portal openings. Check that the target address/port is reachable from players' clients.
 
-## Configuration and secrets
+## Data and safe exits
 
-Runtime databases, logs, local `.env` files, server directories, and root `config.toml` files are excluded from source releases. When an example configuration is provided, copy it locally and keep live tokens, passwords, webhook URLs, and server identifiers out of Git.
+Definitions are saved to the active plugin data folder's `portals.json`, normally `plugins/portals/portals.json`. Prefer the GUI for edits. Stop the server before manual file edits, preserve a backup, and verify definitions with `/portal list` after starting again. Use the GUI or delete command to remove portals rather than relying on removal of an entry followed by reload.
 
-## Release automation
+A transfer needs loaded ground, two blocks of headroom and a position outside every nearby portal. If the plugin cannot verify that exit, it cancels rather than transferring from inside the portal. Fix the exit area, step fully clear, wait for the cooldown and enter again; breaking the portal should not be needed.
 
-Every `v*` tag runs [the wheel release workflow](.github/workflows/wheel-release.yml), checks portal loop protection, builds the package in a clean GitHub runner, stores the wheel as a workflow artifact, and attaches it to the matching GitHub release. Pushing a new package version to `main` also creates its tag and release after these checks pass; existing releases are left unchanged on branch builds.
+## Verification and release automation
+
+Run `python -m unittest discover -s tests -v` for the safety suite. The [release workflow](.github/workflows/wheel-release.yml) checks it before building a wheel. A new package version pushed to `main`, or a matching `v*` tag, publishes the matching release; branch builds leave existing releases unchanged.
+
+See the [how-to](HOW-TO-USE.md) for player behavior, block versus entity transfer timing and the live test checklist.
 <!-- endstone-professional-header:end -->
