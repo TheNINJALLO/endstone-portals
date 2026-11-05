@@ -58,14 +58,14 @@ Entity and block portal system with particle effects, local teleportation, and c
 | Endstone API | `0.11` |
 | Bedrock Dedicated Server | `1.26.52.3` |
 | Python | `>=3.11` |
-| Plugin release | `v1.1.9` |
+| Plugin release | `v1.1.10` |
 
 ## Install
 
 Download the wheel from the matching GitHub release:
 
 ```bash
-gh release download v1.1.9 --repo TheNINJALLO/endstone-portals --pattern "*.whl"
+gh release download v1.1.10 --repo TheNINJALLO/endstone-portals --pattern "*.whl"
 ```
 
 Copy the downloaded wheel into the server's `plugins/` directory, remove any older wheel for the same plugin, and restart Endstone.
