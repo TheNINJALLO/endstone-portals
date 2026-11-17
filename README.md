@@ -1,3 +1,7 @@
+[Download compatibility release v1.1.11](https://github.com/TheNINJALLO/endstone-portals/releases/tag/v1.1.11).
+
+> Compatibility update **1.1.11** targets **Endstone 0.11.16 / BDS 1.26.65.1**, protocol **2225**, Python **3.11+**. API level remains **0.11**. Keep configuration and player data when replacing the wheel. Earlier acceptance records below describe their original builds; current qualification is tracked in the workspace upgrade report.
+
 <!-- endstone-professional-header:start -->
 <p align="center">
   <img src="docs/assets/banner.svg" width="100%" alt="Endstone Portals &mdash; Entity and block portal system with particle effects, local teleportation, and cross-server transfers">
@@ -9,9 +13,9 @@
 </p>
 
 <p align="center">
-  <img alt="Endstone 0.11.15" src="https://img.shields.io/badge/Endstone-0.11.15-52b7a8?style=flat-square">
+  <img alt="Endstone 0.11.16" src="https://img.shields.io/badge/Endstone-0.11.16-52b7a8?style=flat-square">
   <img alt="API 0.11" src="https://img.shields.io/badge/API-0.11-63b8ff?style=flat-square">
-  <img alt="BDS 1.26.60.6" src="https://img.shields.io/badge/BDS-1.26.60.6-8b7dff?style=flat-square">
+  <img alt="BDS 1.26.65.1" src="https://img.shields.io/badge/BDS-1.26.65.1-8b7dff?style=flat-square">
   <img alt="Python >=3.10" src="https://img.shields.io/badge/Python-%3E=3.10-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white">
 </p>
 
@@ -78,13 +82,13 @@ The **18 portal safety regression tests passed in Linux CI**. These use a simula
 
 ## Install
 
-Download [Portals v1.1.10](https://github.com/TheNINJALLO/endstone-portals/releases/tag/v1.1.10):
+Download [Portals v1.1.11](https://github.com/TheNINJALLO/endstone-portals/releases/tag/v1.1.11):
 
 ```bash
-gh release download v1.1.10 --repo TheNINJALLO/endstone-portals --pattern '*.whl'
+gh release download v1.1.11 --repo TheNINJALLO/endstone-portals --pattern '*.whl'
 ```
 
-Stop the server, back up the world and the Portals data folder, replace the previous Portals wheel in `plugins/`, and restart. Do not keep multiple versions installed. Keep the existing `portals.json`; no definition reset is required. Version 1.1.10 retains the loop fix from 1.1.9 without further gameplay changes.
+Stop the server, back up the world and the Portals data folder, replace the previous Portals wheel in `plugins/`, and restart. Do not keep multiple versions installed. Keep the existing `portals.json`; no definition reset is required. Version 1.1.11 retains the loop fix from 1.1.9 without further gameplay changes.
 
 On linked servers, install the updated plugin wherever block portals can receive arriving players and keep destination spawn positions outside portal openings. Check that the target address/port is reachable from players' clients.
 
